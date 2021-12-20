@@ -2,12 +2,12 @@
 /**
  * Author:Rodrino Adolf Kupessala <rkupessala@gmail.com>
  * Version:1.0.0
- * Description: Esta classe permite checar permissões baseadas em url dos usuários,
- * em cada rota deve consultar a bas de dados.
+ * Description: estrutura rápida<controller,model,view,bin/www,email,database config..>
+ *  
  * Exemplos:
  */
 const  fs = require('fs');
-const {dirStruture,server,packages,www,db,indexRoute}=require('./base')
+const {dirStruture,server,packages,www,db,indexRoute,make}=require('./base')
 const {exec}=require('child_process');
 const { stderr } = require('process');
  
@@ -24,10 +24,10 @@ class Generator{
    
        return  value
     }
-    installPackages(){
+    installPackages(name){
       
    
-      exec("cd edu && npm install",(error,stdout,stderr)=>{
+      exec(`cd ${name} && npm install`,(error,stdout,stderr)=>{
         if(error){
             console.log(`error: ${error.message}`)
             return
@@ -85,6 +85,13 @@ class Generator{
 
 
 });
+fs.writeFile( this.validate(src)+'/'+'make.js',make, (err) => {
+  if (err) throw err;
+console.log('[!] File package.json was been created!');
+
+
+
+});
 fs.writeFile( this.validate(src)+'/'+'bin/www',www, (err) => {
     if (err) throw err;
   console.log('[!] File www was been created!');
@@ -113,18 +120,20 @@ fs.writeFile( this.validate(src)+'/routes/'+'index.js',indexRoute, (err) => {
   console.log('[!] File index.js route was been created!');
 
 
+});
+fs.writeFile( this.validate(src)+'/Views/'+'index.ejs',`<h1>HELLO WORD</h1>`, (err) => {
+  if (err) throw err;
+console.log('[!] File index.ejs view was been created!');
+
 
 });
+
 if(fs.existsSync(`${src}/package.json`)){
- this.installPackages()
+ this.installPackages(src)
 }
 
-      }
-      createDir(url){
       
-        // return  url.replace(/[0-9]+\$/,"$1");
-         return  url.replace(/[0-9]+/,"$1");
-      }
+    }
       createModel(name){
       
         if(!fs.existsSync( this.validate('models'))){

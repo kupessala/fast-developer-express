@@ -8,7 +8,7 @@
  */
  const dirStruture=[
     {   bin:'bin',
-        model: 'Model',
+        model: 'Models',
         view: 'Views',
         controller: 'Controller',
         database: 'lib',
@@ -29,7 +29,7 @@ var mysql = require('mysql');
 var connection  = require('./lib/db');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users'); 
+ 
 
 var app = express();
 
@@ -54,7 +54,7 @@ app.use(session({
 app.use(flash());
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+ 
  
 
 // catch 404 and forward to error handler
@@ -98,7 +98,7 @@ const packages=`
   }
 `
 const www=`
-#!/usr/bin/env node
+
 
 /**
  * Module dependencies.
@@ -216,13 +216,32 @@ router.get('/', function(req, res, next) {
 
 module.exports = router;
 `
+const make=`const fs = require('fs'); 
+const generate=require('./builder/Generator')
+var myArgs=process.argv.slice(2)
+ 
+    let view = String(myArgs.find((value) => /^make:view=(.*)/.test(value))).split(/=/)[1];
+   
+    let model = String(myArgs.find(value => /^make:model=(.*)$/.test(value))).split(/=/)[1];
+    let router = String(myArgs.find(value => /^make:router=(.*)$/.test(value))).split(/=/)[1];
+    let controller = String(myArgs.find(value => /^make:folder=(.*)$/.test(value))).split(/=/)[1];
+   
+  
+    if (model !== '' | model != null) {
+         console.log('Ainda nao disponivel')
+    }
+    
+
+ 
+    `
 module.exports={
     dirStruture,
     server,
     packages,
     www,
     db,
-    indexRoute}
+    indexRoute,
+  make}
 
  
 

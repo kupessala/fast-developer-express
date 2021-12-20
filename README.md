@@ -10,3 +10,4 @@ node make.js make:view=<nome_da_view>:vai criar o arquivo view
 node make.js make:controller=<nome_do_controller>:vai criar o arquivo controller
 ATENÇAO:ainda não pode ser usado
 - Aqui não me preocupei com o ORM.
+- TENHA INTERNET PARA INSTALAR DE UMA SÓ VEZ AS DEPENDECIAS NA CRIAÇÃO DO PROJETO.
